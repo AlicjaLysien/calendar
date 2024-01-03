@@ -1,0 +1,110 @@
+@white: #EBFCFF;
+@blue: #1D95C5;
+@blue_2: #2fa9da;
+@green: #008875;
+@green_2: #5BB4A7;
+@orange: #ED992A;
+@orange_2:#fcaa3f;
+@border: 4px;
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 700;
+}
+body {
+	background: @blue;
+}
+.header {
+    border: @green 1px solid;
+    border-radius: @border;
+	display: flex;
+	justify-content: space-between;
+	.current_month {
+		text-transform: uppercase;
+		color: @blue;
+		font-weight: 800;
+        align-self: center;
+        font-size: 18px;
+	}
+	form {
+		input[type=submit] {
+			background-color: @green;
+            background: linear-gradient(14deg, @green 40%, @green_2 50%, @green 60%);
+			border: none;
+			color: @white;
+			font-weight: 800;
+            height: 40px;
+            width: 40px;
+            border-radius: @border;
+			&:hover {
+				cursor: pointer;
+				background-color: @blue;
+                background: linear-gradient(14deg, @blue 40%, @blue_2 50%, @blue 60%);
+			}
+        }
+        input[type=submit].form_previous {
+            border-top-right-radius: 0px;
+            border-bottom-right-radius: 0px;
+        }
+        input[type=submit].form_next {
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+        }
+	}
+        
+}
+.month {
+    background: @white;
+	max-width: calc(280px + 20px);
+	margin: 40px auto;
+	padding: 10px;
+	border-radius: 8px;
+}
+.week {
+	display: flex;
+}
+.week_first {
+	justify-content: flex-end;
+}
+.day {
+	flex-grow: 1;
+	flex-shrink: 1;
+	flex-basis: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: @blue;
+	height: 40px;
+	max-width: 40px;
+}
+.week_first, .week_others {
+    .day{
+        &:hover {
+            cursor: pointer;
+            background-color: @blue;
+            background: linear-gradient(14deg, @blue 40%, @blue_2 50%, @blue 60%);
+            border-radius: @border;
+            color: @white;
+        }
+    }
+}
+.week_names {
+	text-transform: uppercase;
+    border-bottom: solid 1px @blue;
+    margin: 10px 0;
+}
+.today {
+    background-color: @green_2;
+    background: linear-gradient(14deg, @green 40%, @green_2 50%, @green 60%);
+    color: @white;
+    border-radius: @border;
+}
+.event {
+    background-color: @orange_2;
+    background: linear-gradient(14deg, @orange 40%, @orange_2 50%, @orange 60%);
+    color: @white;
+    border-radius: @border;
+}
