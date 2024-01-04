@@ -30,7 +30,7 @@ function createCalendar()
 {
 
     include 'events.php';
-    include 'czech_months.php';
+    include 'czech.php';
 
     $month = 0;
     $year = 0;
@@ -89,18 +89,14 @@ function createCalendar()
             <input type="submit" value=">" class="form_next" />
         </form>';
 
-    $calendar = $calendar . '
-        </div>
-        <div class="week week_names">
-            <div class="day">po</div>
-            <div class="day">út</div>
-            <div class="day">st</div>
-            <div class="day">čt</div>
-            <div class="day">pá</div>
-            <div class="day">so</div>
-            <div class="day">ne</div>
-        </div>
-        <div class="week week_first">';
+    $calendar = $calendar . '</div><div class="week week_names">';
+
+    $divs_week = "";
+    foreach ($czech_week as $day) {
+        $divs_week = $divs_week . '<div class="day">'. $day .'</div>';
+    }
+
+    $calendar = $calendar . $divs_week . '</div><div class="week week_first">';
 
 
     $is_first_week = true;
@@ -115,7 +111,7 @@ function createCalendar()
             '" data-event="' . isEvent($current_date, $allEvents, 'event') . '"
         data-date="' . $current_date . '"
         >' . $current_day . '</div>';
-    };
+    }
 
     $calendar = $calendar . $first_week_calendar . '</div>';
 
