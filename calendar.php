@@ -4,13 +4,18 @@ function isToday($current_day, $month, $year){
     if(($year == date("Y") && $month == date("m")) && $current_day == date('d')) return 'today';
 }
 
-function isEvent($current_day, $month, $year, $allEvents){
+function isEvent($current_date, $allEvents, $data){
+    foreach($allEvents as $event){
+        if($current_date == $event->date && $data == "style") return 'event';
+        if($current_date == $event->date && $data == "event") return $event->name;
+    }
+}
+
+function currentDate($current_day, $month, $year){
     if(strlen($current_day) == 1) $current_day = '0'.$current_day;
     if(strlen($month) == 1) $month = '0'.$month;
     $current_date = $current_day.'-'.$month.'-'.$year;
-    foreach($allEvents as $event){
-        if($current_date == $event->date) return 'event';
-    }
+    return $current_date;
 }
 
 function createCalendar() {
@@ -21,7 +26,7 @@ function createCalendar() {
     $month = 0;
     $year = 0;
      
-    if(!$month && isset($_POST['month'])){
+    if(!$month && isset($_POST['month'])) {
         if($_POST['action'] == "previous") {
             $month = $_POST['month'] - 1;
             if($month == 0) $month = 12;
@@ -36,7 +41,7 @@ function createCalendar() {
 
     $month = ltrim($month, '0');
 
-    if(!$year && isset($_POST['year'])){
+    if(!$year && isset($_POST['year'])) {
         $year = $_POST['year'];
         if($_POST['action'] == "previous") {
             if($month == 12) $year--;
@@ -44,7 +49,7 @@ function createCalendar() {
         if($_POST['action'] == "next") {
             if($month == 1) $year++;
         }
-    } else if (!$year){
+    } else if (!$year) {
         $year = date("Y",time());  
     }
      
@@ -74,13 +79,13 @@ function createCalendar() {
     $calendar= $calendar.'
         </div>
         <div class="week week_names">
-            <div class="day">po</div>
-            <div class="day">út</div>
-            <div class="day">st</div>
-            <div class="day">čt</div>
-            <div class="day">pá</div>
-            <div class="day">so</div>
-            <div class="day">ne</div>
+            <div class="day_week">po</div>
+            <div class="day_week">út</div>
+            <div class="day_week">st</div>
+            <div class="day_week">čt</div>
+            <div class="day_week">pá</div>
+            <div class="day_week">so</div>
+            <div class="day_week">ne</div>
         </div>
         <div class="week week_first">';
 
@@ -91,9 +96,12 @@ function createCalendar() {
 
     $current_day = 1;
     for ($current_day; $current_day <= 8 - $first_day_of_week; $current_day++) {
+        $current_date = currentDate($current_day, $month, $year);
         $first_week_calendar = $first_week_calendar.'<div class="day '.
-        isToday($current_day, $month, $year).' '.isEvent($current_day, $month, $year, $allEvents).
-        '">'.$current_day.'</div>';
+        isToday($current_day, $month, $year).' '.isEvent($current_date, $allEvents, 'style').
+        '" data-event="'.isEvent($current_date, $allEvents, 'event').'"
+        data-date="'.$current_date.'"
+        >'.$current_day.'</div>';
     };
 
     $calendar = $calendar.$first_week_calendar.'</div>';
@@ -107,9 +115,12 @@ function createCalendar() {
     for ($row = 1; $row <= $number_of_rows; $row++) {
         $calendar_weeks = $calendar_weeks.'<div class="week week_others">';
         for($i = 1; $i < 8; $i++){
+            $current_date = currentDate($current_day, $month, $year);
             $calendar_weeks = $calendar_weeks.'<div class="day '.
-            isToday($current_day, $month, $year).' '.isEvent($current_day, $month, $year, $allEvents).
-                '">'.$current_day.'</div>';
+            isToday($current_day, $month, $year).' '.isEvent($current_date, $allEvents, 'style').
+                '" data-event="'.isEvent($current_date, $allEvents, 'event').'"
+                data-date="'.$current_date.'"
+                >'.$current_day.'</div>';
             if($current_day === $number_of_days_in_month) break;
             $current_day = $current_day + 1;
         }

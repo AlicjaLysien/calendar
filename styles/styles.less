@@ -57,6 +57,7 @@ body {
         
 }
 .month {
+	position: relative;
     background: @white;
 	max-width: calc(280px + 20px);
 	margin: 40px auto;
@@ -69,7 +70,7 @@ body {
 .week_first {
 	justify-content: flex-end;
 }
-.day {
+.day, .day_week {
 	flex-grow: 1;
 	flex-shrink: 1;
 	flex-basis: 0;
@@ -107,4 +108,37 @@ body {
     background: linear-gradient(14deg, @orange 40%, @orange_2 50%, @orange 60%);
     color: @white;
     border-radius: @border;
+	&::before {
+		content: attr(data-event);
+		position: absolute;
+		display: none;
+		top: 370px;
+		left: 0px;
+		width: 280px;
+		background-color: @white;
+		border-radius: @border;
+		padding: 10px;
+		color: @green;
+		font-size: 22px;
+	}
+	&::after {
+		content: attr(data-date);
+		position: absolute;
+		display: none;
+		top: 340px;
+		left: 0px;
+		width: 280px;
+		height: 30px;
+		background-color: @white;
+		border-radius: @border;
+		padding: 10px 10px 0px;
+		color: @green;
+		font-size: 16px;
+	}
+	&:hover::after {
+		display: block;
+	}
+	&:hover::before {
+		display: block;
+	}
 }
