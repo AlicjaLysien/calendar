@@ -79,13 +79,13 @@ function createCalendar() {
     $calendar= $calendar.'
         </div>
         <div class="week week_names">
-            <div class="day_week">po</div>
-            <div class="day_week">út</div>
-            <div class="day_week">st</div>
-            <div class="day_week">čt</div>
-            <div class="day_week">pá</div>
-            <div class="day_week">so</div>
-            <div class="day_week">ne</div>
+            <div class="day">po</div>
+            <div class="day">út</div>
+            <div class="day">st</div>
+            <div class="day">čt</div>
+            <div class="day">pá</div>
+            <div class="day">so</div>
+            <div class="day">ne</div>
         </div>
         <div class="week week_first">';
 
